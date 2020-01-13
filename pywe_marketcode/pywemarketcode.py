@@ -45,7 +45,7 @@ class MarketCode(BaseToken):
             },
         )
 
-    def applycodedownload(self, application_id, code_start, code_end, appid=None, secret=None, token=None, storage=None, decrypted=True):
+    def applycodedownload(self, application_id, code_start, code_end, appid=None, secret=None, token=None, storage=None, decrypted=True, iv=None):
         res = self.post(
             self.APPLYCODEDOWNLOAD,
             params={
@@ -59,7 +59,7 @@ class MarketCode(BaseToken):
         )
         if not decrypted:
             return res
-        return code_decrypt(res.get('buffer', ''))
+        return code_decrypt(res.get('buffer', ''), iv=iv)
 
     def codeactive(self, application_id, activity_name, product_brand, product_title, product_code, wxa_appid, wxa_path, code_start, code_end, wxa_type=0, appid=None, secret=None, token=None, storage=None):
         return self.post(
