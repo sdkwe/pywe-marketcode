@@ -57,6 +57,12 @@ class MarketCode(BaseToken):
                 'code_end': code_end,
             },
         )
+        # {
+        #     "errcode": 80309,
+        #     "errmsg": "子任务文件过期, ... hint: [6g6r8a0651d236]"
+        # }
+        if res.get('errcode') != 0:
+            return res
         if not decrypted:
             return res
         return code_decrypt(res.get('buffer', ''), iv=iv)
